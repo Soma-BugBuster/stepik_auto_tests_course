@@ -16,6 +16,13 @@ from .locators import ProductPageLocators
 class ProductPage(BasePage):
     def should_be_product_page(self):
         self.should_be_a_checkout()
+        self.should_not_be_success_message()
+        self.should_not_be_success_message_after_adding_product_to_basket()
+        self.should_be_disappeared_success_message()
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
 
     def should_be_a_checkout(self):
         precheck_product_name = self.check_element_text(*ProductPageLocators.PRECHECK_PRODUCT_NAME)
@@ -28,4 +35,16 @@ class ProductPage(BasePage):
         print("Название продукта корректно.")
         self.compare_elements_text(precheck_product_price, checkout_product_price)
         print("Цена корректна.")
-        # sleep(2)
+
+    def should_not_be_success_message_after_adding_product_to_basket(self):
+        self.click_to_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
+        self.solve_quiz_and_get_code()
+        # sleep(60)
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def should_be_disappeared_success_message(self):
+        self.click_to_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
+        self.solve_quiz_and_get_code()
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is not disappeared, but should be"

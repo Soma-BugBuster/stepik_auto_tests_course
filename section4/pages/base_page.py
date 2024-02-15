@@ -1,14 +1,13 @@
-from time import sleep
-
 import math
-from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import NoAlertPresentException, TimeoutException, NoSuchElementException
 import random
 import string
-from selenium.common.exceptions import NoSuchElementException
 import os
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.locators import BasePageLocators
 
 
 class BasePage:
@@ -46,6 +45,13 @@ class BasePage:
         current_url = self.browser.current_url
         assert expected_url in current_url, f"Ошибка! Ожидался: {expected_url}. Фактический: {current_url}"
 
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
+
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
     """
     Работаем с элементами страницы (включая поля ввода)
     """
@@ -66,6 +72,29 @@ class BasePage:
             return True
         except NoSuchElementException:
             return False
+
+    def is_not_element_present(self, how, what, timeout=4):
+        """
+        :return: проверяем отсутствие элемента
+        """
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+
+        return False
+
+    def is_disappeared(self, how, what, timeout=4):
+        """
+        :return: проверяем исчезание элемента
+        """
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
 
     def move_to_element(self, how, what):
         """
