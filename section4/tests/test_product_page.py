@@ -1,4 +1,6 @@
 import pytest
+
+from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.basket_page import BasketPage
 from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.product_page import ProductPage
 
 
@@ -49,3 +51,12 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page = ProductPage(browser, link)
     page.open()
     page.go_to_login_page()
+
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.open_basket()
+    basket = BasketPage(browser, ProductPage.return_url)
+    basket.should_be_empty_basket()
