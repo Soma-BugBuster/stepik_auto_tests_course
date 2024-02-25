@@ -112,6 +112,12 @@ class BasePage:
         actions = ActionChains(self.browser)
         actions.click(selected_element).perform()
 
+    def open_basket(self):
+        """
+        Переходим в корзину по кнопке в шапке сайта.
+        """
+        self.click_to_element(*BasePageLocators.BASKET_BUTTON)
+
     def input_into_field(self, how, what, input_value):
         """
         Вводим данные в поле.
