@@ -1,5 +1,5 @@
 from .base_page import BasePage
-from .locators import LoginPageLocators
+from .locators import LoginPageLocators, BasePageLocators
 
 
 class LoginPage(BasePage):
@@ -16,3 +16,12 @@ class LoginPage(BasePage):
 
     def should_be_register_form(self):
         assert self.is_element_present(*LoginPageLocators.SIGN_UP_FORM), "Sign up form not found"
+
+    def register_new_user(self):
+        email = self.random_email()
+        password = self.random_password()
+        self.click_to_element(*BasePageLocators.LOGIN_LINK)
+        self.input_into_field(*LoginPageLocators.SIGN_UP_EMAIL_FIELD, email)
+        self.input_into_field(*LoginPageLocators.SIGN_UP_PASSWORD_FIELD, password)
+        self.input_into_field(*LoginPageLocators.SIGN_UP_CONFIRM_PASSWORD_FIELD, password)
+        self.click_to_element(*LoginPageLocators.REGISTER_BUTTON)
