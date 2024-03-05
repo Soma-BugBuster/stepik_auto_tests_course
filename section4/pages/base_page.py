@@ -6,7 +6,7 @@ import os
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import faker
 from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.locators import BasePageLocators
 
 
@@ -127,16 +127,21 @@ class BasePage:
         selected_field.send_keys(input_value)
 
     @staticmethod
-    def random_password(chars):
+    def random_password(chars=10):
         """
-        staticmethod добавляем, т.к. метод не использует атрибуты экземпляра класса (self)
-        и не взаимодействует с другими членами класса.
-        :param chars: Задаём количество символов.
-        :return: Рандомный набор символов.
+        Генерирует рандомный пароль. Длина по умолчанию - 10. Принимаемые password() параметры:
+        password(length=10, special_chars=True, digits=True, upper_case=True, lower_case=True)
         """
-        characters = string.ascii_letters + string.digits
-        cut_string = ''.join(random.choice(characters) for _ in range(chars))
-        return cut_string
+        password = faker.Faker().password(length=chars)
+        return password
+
+    @staticmethod
+    def random_email():
+        """
+        Генерирует рандомный email.
+        """
+        email = faker.Faker().email()
+        return email
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
@@ -161,6 +166,10 @@ class BasePage:
     def compare_elements_text(expected, actual):
         assert actual == expected, f"Ошибка! Ожидаемый текст: {expected}. Фактический текст: {actual}"
         return True
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
 
     """
     Работаем с файлами (аттачи  и скриншоты)
