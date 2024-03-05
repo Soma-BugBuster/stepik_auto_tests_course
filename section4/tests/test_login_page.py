@@ -1,4 +1,4 @@
-from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.login_page import LoginPage
+from section4.pages.login_page import LoginPage
 
 
 def test_should_be_login_url(browser):

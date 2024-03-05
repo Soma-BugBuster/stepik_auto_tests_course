@@ -1,8 +1,8 @@
 import pytest
-from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.basket_page import BasketPage
-from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.login_page import LoginPage
-from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.product_page import ProductPage
-from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.variables import Links
+from section4.pages.basket_page import BasketPage
+from section4.pages.login_page import LoginPage
+from section4.pages.product_page import ProductPage
+from section4.pages.variables import Links
 
 
 urls = [pytest.param(f"{Links.product_base_link}?promo=offer{i}", marks=pytest.mark.xfail(i == 7, reason=''))

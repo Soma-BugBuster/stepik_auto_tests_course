@@ -1,4 +1,4 @@
-from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.locators import BasketPageLocators
+from section4.pages.locators import BasketPageLocators
 from .base_page import BasePage
 
 

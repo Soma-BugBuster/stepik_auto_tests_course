@@ -1,13 +1,11 @@
 import math
 from selenium.common.exceptions import NoAlertPresentException, TimeoutException, NoSuchElementException
-import random
-import string
 import os
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import faker
-from Stepik.Автоматизация_тестирования_с_помощью_Selenium_и_Python.section4.pages.locators import BasePageLocators
+from section4.pages.locators import BasePageLocators
 
 
 class BasePage:
